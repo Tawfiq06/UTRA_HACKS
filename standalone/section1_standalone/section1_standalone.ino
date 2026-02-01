@@ -68,7 +68,7 @@
 #define PIN_MOTOR_IN2     7   // Direction pin 2 for Motor A
 #define PIN_MOTOR_ENB     10  // Speed control for Motor B (MUST be PWM pin)
 #define PIN_MOTOR_IN3     11  // Direction pin 1 for Motor B
-#define PIN_MOTOR_IN4     4   // Direction pin 2 for Motor B (Changed from 13 for R4!)
+#define PIN_MOTOR_IN4     A5  // Direction pin 2 for Motor B (Changed from 13 for R4!)
 
 // --- SERVOS ---
 // Servos are motors that rotate to a specific angle (0-180 degrees).

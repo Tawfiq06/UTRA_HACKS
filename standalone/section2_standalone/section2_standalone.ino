@@ -22,7 +22,7 @@
 #define PIN_MOTOR_IN2     7
 #define PIN_MOTOR_ENB     10
 #define PIN_MOTOR_IN3     11
-#define PIN_MOTOR_IN4     13
+#define PIN_MOTOR_IN4     A5  // Changed from 13 (conflicts with LED on R4)
 
 #define PIN_SERVO_BASE    12
 #define PIN_SERVO_CLAMP   A4

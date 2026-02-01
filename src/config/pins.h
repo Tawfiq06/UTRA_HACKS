@@ -24,7 +24,7 @@
 #define PIN_MOTOR_IN2     7   // Motor A direction 2
 #define PIN_MOTOR_ENB     10  // Motor B PWM (Left motor)
 #define PIN_MOTOR_IN3     11  // Motor B direction 1
-#define PIN_MOTOR_IN4     13  // Motor B direction 2
+#define PIN_MOTOR_IN4     A5  // Motor B direction 2 (Changed from 13 for R4)
 
 // ============================================================================
 // SERVOS
