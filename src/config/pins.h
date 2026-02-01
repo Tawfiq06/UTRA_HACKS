@@ -24,12 +24,12 @@
 #define PIN_MOTOR_IN2     7   // Motor A direction 2
 #define PIN_MOTOR_ENB     10  // Motor B PWM (Left motor)
 #define PIN_MOTOR_IN3     11  // Motor B direction 1
-#define PIN_MOTOR_IN4     A5  // Motor B direction 2 (Changed from 13 for R4)
+#define PIN_MOTOR_IN4     12  // Motor B direction 2
 
 // ============================================================================
 // SERVOS
 // ============================================================================
-#define PIN_SERVO_BASE    12  // Base servo (arm up/down)
+#define PIN_SERVO_BASE    A5  // Base servo (arm up/down)
 #define PIN_SERVO_CLAMP   A4  // Clamp servo (open/close)
 
 // ============================================================================

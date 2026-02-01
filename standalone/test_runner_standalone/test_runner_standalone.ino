@@ -20,9 +20,9 @@
 #define PIN_MOTOR_IN2     7
 #define PIN_MOTOR_ENB     10
 #define PIN_MOTOR_IN3     11
-#define PIN_MOTOR_IN4     A5  // Changed from 13 (conflicts with LED on R4)
+#define PIN_MOTOR_IN4     12  // Direction pin 2 for Motor B
 
-#define PIN_SERVO_BASE    12
+#define PIN_SERVO_BASE    A5
 #define PIN_SERVO_CLAMP   A4
 
 #define PIN_ULTRA_TRIG    A0

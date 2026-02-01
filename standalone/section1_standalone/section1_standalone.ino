@@ -68,12 +68,12 @@
 #define PIN_MOTOR_IN2     7   // Direction pin 2 for Motor A
 #define PIN_MOTOR_ENB     10  // Speed control for Motor B (MUST be PWM pin)
 #define PIN_MOTOR_IN3     11  // Direction pin 1 for Motor B
-#define PIN_MOTOR_IN4     A5  // Direction pin 2 for Motor B (Changed from 13 for R4!)
+#define PIN_MOTOR_IN4     12  // Direction pin 2 for Motor B
 
 // --- SERVOS ---
 // Servos are motors that rotate to a specific angle (0-180 degrees).
 // We use two: one to lift/lower the arm, one to open/close the claw.
-#define PIN_SERVO_BASE    12  // Arm servo (up/down movement)
+#define PIN_SERVO_BASE    A5  // Arm servo (up/down movement)
 #define PIN_SERVO_CLAMP   A4  // Claw servo (open/close)
 
 // --- ULTRASONIC SENSOR (HC-SR04) ---
