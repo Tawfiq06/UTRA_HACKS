@@ -6,34 +6,34 @@ import uuid
 import os
 
 # --- CONFIGURATION ---
-st.set_page_config(page_title="Biathlon Coach", page_icon="⛷️", layout="centered")
+st.set_page_config(page_title="Biathlon Coach", page_icon="❄️", layout="centered")
 
-# --- DARK MODE OLYMPIC CSS ---
+# --- DARK ICE THEME CSS ---
 st.markdown("""
 <style>
-    /* 1. MAIN BACKGROUND: Dark Winter Night */
+    /* 1. MAIN BACKGROUND: Deep Frozen Night */
     .stApp {
-        background-color: #0e1117;
-        background-image: radial-gradient(#1c222e 10%, transparent 10%), radial-gradient(#1c222e 10%, transparent 10%);
-        background-size: 30px 30px;
-        background-position: 0 0, 15px 15px;
+        background: radial-gradient(circle at center, #1e3a8a 0%, #020617 100%);
+        background-attachment: fixed;
     }
 
-    /* 2. INPUT FIELD (Dark Mode) */
+    /* 2. INPUT FIELD (Frosted Glass) */
     .stTextInput input {
-        background-color: #262730 !important;
-        color: #ffffff !important;
-        border: 2px solid #4da6ff !important; /* Neon Blue Border */
+        background-color: rgba(30, 41, 59, 0.8) !important; /* Dark Blue-Grey */
+        color: #e0f2fe !important; /* Light Ice Blue Text */
+        border: 2px solid #38bdf8 !important; /* Cyan Border */
         border-radius: 8px;
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
     }
     .stTextInput label {
-        color: #4da6ff !important;
+        color: #38bdf8 !important; /* Cyan Label */
         font-weight: 800 !important;
-        font-size: 1rem !important;
+        font-size: 3rem !important;
         text-transform: uppercase;
+        text-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
     }
 
-    /* 3. PRIMARY BUTTON (GOLD MEDAL) */
+    /* 3. PRIMARY BUTTON (GOLD MEDAL - Kept for contrast) */
     div.stButton > button[kind="primary"] {
         background: linear-gradient(180deg, #FFD700 0%, #B8860B 100%);
         color: black !important;
@@ -43,56 +43,59 @@ st.markdown("""
         font-size: 1.2rem;
         border-radius: 8px;
         width: 100%;
-        box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5); /* Gold Glow */
+        box-shadow: 0px 0px 15px rgba(255, 215, 0, 0.4);
         transition: all 0.2s;
     }
     div.stButton > button[kind="primary"]:hover {
         transform: scale(1.02);
-        box-shadow: 0px 0px 20px rgba(255, 215, 0, 0.8);
+        box-shadow: 0px 0px 25px rgba(255, 215, 0, 0.7);
     }
 
-    /* 4. SECONDARY BUTTON (RESET - Red Glow) */
+    /* 4. SECONDARY BUTTON (RESET - Icy Cyan) */
     div.stButton > button[kind="secondary"] {
         background-color: transparent;
-        border: 2px solid #FF4B4B; 
-        color: #FF4B4B !important;
+        border: 2px solid #22d3ee; 
+        color: #22d3ee !important;
         font-weight: bold;
         border-radius: 8px;
         width: 100%;
     }
     div.stButton > button[kind="secondary"]:hover {
-        border-color: #FF0000;
-        color: #FF0000 !important;
-        box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
+        border-color: #06b6d4;
+        color: #06b6d4 !important;
+        box-shadow: 0px 0px 15px rgba(34, 211, 238, 0.4);
     }
 
-    /* 5. CHAT BUBBLES (Dark Mode Style) */
+    /* 5. CHAT BUBBLES */
     .user-msg {
-        background-color: #1e3a8a; /* Dark Blue */
+        background-color: rgba(14, 165, 233, 0.15); /* Transparent Cyan */
         color: #e0f2fe;
         padding: 15px;
         border-radius: 15px;
         margin-bottom: 10px;
-        border-left: 4px solid #3b82f6;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        border-left: 4px solid #0ea5e9;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
     .coach-msg {
-        background-color: #450a0a; /* Dark Red */
-        color: #ffe4e6;
+        background-color: rgba(220, 38, 38, 0.15); /* Transparent Red */
+        color: #fee2e2;
         padding: 15px;
         border-radius: 15px;
         margin-bottom: 10px;
-        border-left: 4px solid #ef4444;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        border-left: 4px solid #dc2626;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
     
     /* 6. HEADER CONTAINER */
     .header-container {
         text-align: center;
-        padding: 20px;
-        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,47,108,0.3) 100%);
-        border-bottom: 2px solid #4da6ff;
-        margin-bottom: 20px;
+        padding: 25px;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(56, 189, 248, 0.1) 100%);
+        border-bottom: 1px solid #38bdf8;
+        margin-bottom: 25px;
+        border-radius: 0 0 20px 20px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -216,19 +219,17 @@ if 'chat_session' not in st.session_state:
 # --- LOGO & HEADER ---
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    # Look for 'logo.png' locally, otherwise show a web placeholder
     if os.path.exists("logo.png"):
         st.image("logo.png", use_container_width=True)
     else:
-        # Fallback to generic Olympic rings if they haven't added the file yet
         st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Olympic_rings_without_rims.svg/1200px-Olympic_rings_without_rims.svg.png", use_container_width=True)
 
 st.markdown("""
 <div class="header-container">
-    <h1 style="color: #ffffff; margin: 0; font-family: 'Arial Black', sans-serif; font-style: italic; text-transform: uppercase; font-size: 2.5rem; text-shadow: 0px 0px 10px #4da6ff;">
+    <h1 style="color: #ffffff; margin: 0; font-family: 'Arial Black', sans-serif; font-style: italic; text-transform: uppercase; font-size: 2.5rem; text-shadow: 0px 0px 15px #38bdf8;">
         OLYMPIC ROBO-COACH
     </h1>
-    <h3 style="color: #FFD700; margin-top: 5px; font-style: italic;">
+    <h3 style="color: #FFD700; margin-top: 5px; font-style: italic; text-shadow: 0px 0px 5px rgba(255, 215, 0, 0.5);">
         "GOLD MEDALS AREN'T WON BY WEAK ROBOTS!"
     </h3>
 </div>
@@ -245,12 +246,18 @@ if st.session_state.conversation_messages:
 
 with st.container():
     # INPUT SECTION
-    user_input = st.text_input("📢 REPORT SLOPE CONDITIONS:", placeholder="e.g., The robot missed the green line!", key="user_input")
+    user_input = st.text_input("VENT YOUR PROBLEMS TO COACH:", placeholder="e.g., The robot missed the green line!", key="user_input")
 
     # BUTTONS
-    col1, col2 = st.columns([3, 1])
+    # [3, 0.2, 1] -> Main Button | Tiny Gap | Reset Button
+    col1, gap, col2 = st.columns([3, 2.5
+                                  , 1])
+
     with col1:
         rant_btn = st.button("GET COACHED 🥇", type="primary")
+    
+    # We leave 'gap' empty to push the button slightly right
+    
     with col2:
         if st.button("🔄 RESET", type="secondary", help="Clear Conversation"):
             st.session_state.conversation_messages = []
@@ -266,7 +273,7 @@ if rant_btn and user_input:
 
     st.session_state.conversation_messages.append({'role': 'user', 'content': user_input})
     
-    with st.spinner("😤 Coach is waxing his skis..."):
+    with st.spinner("❄️ Coach is sharpening his skates..."):
         is_first = len(st.session_state.conversation_messages) == 1
         rant_text = get_coach_rant(user_input, st.session_state.chat_session, is_first)
     
@@ -292,20 +299,21 @@ if rant_btn and user_input:
             @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
             body {{ background: transparent; margin: 0; overflow: hidden; }}
             #typingContainer {{ 
-                background: #000000; 
-                border: 2px solid #EE334E; 
+                background: rgba(0, 0, 0, 0.8); 
+                border: 2px solid #22d3ee; 
                 padding: 15px; 
                 border-radius: 10px; 
                 min-height: 100px;
-                box-shadow: 0px 0px 15px rgba(238, 51, 78, 0.4);
+                box-shadow: 0px 0px 15px rgba(34, 211, 238, 0.3);
+                backdrop-filter: blur(5px);
             }}
             #text {{ 
-                color: #39ff14; /* NEON GREEN TEXT */
+                color: #22d3ee; /* ICE CYAN TEXT */
                 font-family: 'VT323', monospace; 
                 font-size: 22px; 
                 text-transform: uppercase; 
                 line-height: 1.4; 
-                text-shadow: 0 0 5px #39ff14;
+                text-shadow: 0 0 8px #22d3ee;
             }}
         </style>
         <body>
