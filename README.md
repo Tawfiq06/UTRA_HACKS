@@ -1,143 +1,80 @@
-# UTRA HACKS Competition Robot
+# UTRA HACKS - Competition Robot
 
-A modular, well-tested Arduino robot for the UTRA HACKS competition featuring line following, color detection, obstacle avoidance, and object manipulation.
-
-## Competition Sections
-
-| Section | Task | Upload Point |
-|---------|------|--------------|
-| **1. Start** | Follow black line → Pick up box → Take green path → Drop at blue zone | Competition start |
-| **2. Target** | Climb ramp → Navigate colored rings to center → Shoot ball | 1st re-upload |
-| **3. Obstacle** | Follow red line → Avoid obstacles → Drop box → Return to start | 2nd re-upload |
-
-## Quick Start
-
-### 1. Test Your Robot
-```bash
-# Upload the test runner
-src/test/test_runner/test_runner.ino
-
-# In Serial Monitor (9600 baud):
-# Press 5 for Quick Diagnostics
-# Press 6 for Calibration Mode
-```
-
-### 2. Competition Day
-```bash
-# At START:
-src/sections/section1/section1.ino
-
-# At 1st RE-UPLOAD:
-src/sections/section2/section2.ino
-
-# At 2nd RE-UPLOAD:
-src/sections/section3/section3.ino
-```
+A three-section autonomous robot for the UTRA Hacks competition.
 
 ## Project Structure
 
 ```
-UTRA_HACKS-main/
-├── src/                       # Clean, modular code
-│   ├── config/                # Pin & constant definitions
-│   ├── core/                  # Reusable modules (sensors, motors, etc.)
-│   ├── sections/              # Competition section code
-│   └── test/                  # Comprehensive test suite
-│
-├── Archive/                   # Legacy code reference
-└── README.md                  # This file
+standalone/
+├── start_section/      ← Section 1: Start area
+│   └── start_section.ino
+├── target_section/     ← Section 2: Target shooting
+│   └── target_section.ino
+├── obstacle_section/   ← Section 3: Obstacle course
+│   └── obstacle_section.ino
+└── diagnostic/         ← Hardware testing tool
+    └── diagnostic.ino
 ```
 
-## Hardware Requirements
+## Competition Sections
 
-- Arduino Uno/Nano
-- L298N Motor Driver
-- TCS3200 Color Sensor
-- HC-SR04 Ultrasonic Sensor
-- 2x IR Line Sensors
-- 2x SG90 Servos (arm + clamp)
-- 2x DC Motors with wheels
+### Section 1: Start Section
+**File:** `standalone/start_section/start_section.ino`
 
-## Wiring Diagram
+**Mission:** Follow black line → Pick up box → Take green path → Drop at blue zone
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                      ARDUINO                             │
-├─────────────────────────────────────────────────────────┤
-│                                                          │
-│  D2 ────── Color S0      A0 ────── Ultrasonic TRIG      │
-│  D3 ────── Color S1      A1 ────── Ultrasonic ECHO      │
-│  D4 ────── Color S2      A2 ────── IR Left              │
-│  D5 ────── Color S3      A3 ────── IR Right             │
-│  D6 ────── Color OUT     A4 ────── Servo Clamp          │
-│                                                          │
-│  D7 ────── Motor IN2     D11 ────── Motor IN3           │
-│  D8 ────── Motor IN1     D12 ────── Servo Base          │
-│  D9 ────── Motor ENA     D13 ────── Motor IN4           │
-│  D10 ───── Motor ENB                                     │
-│                                                          │
-└─────────────────────────────────────────────────────────┘
-```
+### Section 2: Target Shooting  
+**File:** `standalone/target_section/target_section.ino`
 
-## Testing
+**Mission:** Climb ramp → Navigate colored rings to center → Shoot ball → Return
 
-The test framework includes 30+ test cases across three categories:
+### Section 3: Obstacle Course
+**File:** `standalone/obstacle_section/obstacle_section.ino`
 
-### Sensor Tests
-- Ultrasonic distance accuracy
-- Color detection (black, white, red, green, blue)
-- IR line detection
+**Mission:** Follow red line → Pick up box → Avoid 2 obstacles → Drop at blue → Return home
 
-### Motor Tests
-- Forward/backward movement
-- Turn accuracy
-- Servo pickup/drop sequences
+## Hardware Wiring
 
-### Navigation Tests
-- Line following
-- Obstacle avoidance
-- Color-based path selection
+### Motor Driver (L298N)
+| Motor | Function | Arduino Pin |
+|-------|----------|-------------|
+| Motor A | LEFT wheel | ENA=9, IN1=8, IN2=7 |
+| Motor B | RIGHT wheel | ENB=10, IN3=11, IN4=12 |
 
-Run all tests:
-```cpp
-// Upload test_runner.ino
-// Select option 4 in menu
-```
+### Sensors
+| Sensor | Pins |
+|--------|------|
+| Color (TCS3200) | S0=2, S1=3, S2=4, S3=5, OUT=6 |
+| Ultrasonic (HC-SR04) | TRIG=A0, ECHO=A1 |
+| IR Left | A2 |
+| IR Right | A3 |
 
-## Complexity Analysis
+### Servos
+| Servo | Pin |
+|-------|-----|
+| Arm (Base) | A5 |
+| Claw (Clamp) | A4 |
 
-| Operation | Time | Space |
-|-----------|------|-------|
-| Sensor read | O(1) | O(1) |
-| Motor command | O(1) | O(1) |
-| Line following | O(1) | O(1) |
-| Obstacle avoidance | O(n)* | O(1) |
-| Complete section | O(n) | O(1) |
+## How to Use
 
-*n = obstacle size
+1. Open Arduino IDE
+2. Open the section you want to run (e.g., `standalone/start_section/start_section.ino`)
+3. Select your board (Arduino UNO R4 Minima)
+4. Select the correct COM port
+5. Upload!
 
-## Calibration
+## Diagnostic Tool
 
-Edit `src/config/constants.h` to tune:
+Use `standalone/diagnostic/diagnostic.ino` to test individual components:
 
-```cpp
-// Motor speeds (0-255)
-#define SPEED_NORMAL      150
+1. Upload the diagnostic sketch
+2. Open Serial Monitor (9600 baud)
+3. Use the menu to test motors, sensors, and servos
 
-// Color thresholds
-#define COLOR_FREQ_BLACK  200
+## Speed Compensation
 
-// Distance thresholds (cm)
-#define DIST_OBSTACLE     15
+The right motor runs faster than the left. A 0.9 multiplier is applied to the right motor speed to make the robot drive straight.
 
-// Timing (ms)
-#define TIME_TURN_90      500
-```
-
-## Team
-
-UTRA HACKS 2026
-
-## License
-
-MIT
+If your robot still drifts, adjust `SPEED_COMPENSATION` in the code:
+- Drifts right? → Decrease value (e.g., 0.85)
+- Drifts left? → Increase value (e.g., 0.95)
